@@ -5,9 +5,9 @@ const path = require( 'path' );
 module.exports = {
   entry: path.resolve( __dirname, 'src/main.js' ),
   output: {
-    filename: '[MODULE_NAME].js',
+    filename: 'textInput.js',
 		path: path.resolve( __dirname, 'dist' ),
-		library: '[MODULE_NAME]',
+		library: 'textInput',
 		libraryTarget: 'umd',
 		umdNamedDefine: true
   },
