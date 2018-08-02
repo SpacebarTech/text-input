@@ -2,7 +2,7 @@
   "name": "@spacebartech/text-input",
   "version": "0.0.0-development",
   "description": "Text input component",
-  "main": "dist/textInput.js",
+  "main": "dist/textinput.js",
   "scripts": {
     "test": "mocha --require babel-core/register --colors ./test/test.js",
     "build": "webpack",
