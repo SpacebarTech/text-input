@@ -3,7 +3,7 @@ const path = require( 'path' );
 // Add dependancies to exclode in externals.
 // Ex externals : { moment: 'moment' }
 module.exports = {
-  entry: path.resolve( __dirname, 'src/main.js' ),
+  entry: path.resolve( __dirname, 'src/main.vue' ),
   output: {
     filename: 'textInput.js',
 		path: path.resolve( __dirname, 'dist' ),
