@@ -123,6 +123,7 @@ export default {
 </script>
 
 <style lang='scss'>
+
 $green              : #68A65E;
 $red                : #e23434;
 $secondaryGrey      : #323232;
