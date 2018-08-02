@@ -7,7 +7,7 @@ module.exports = {
   output: {
     filename: 'textInput.js',
 		path: path.resolve( __dirname, 'dist' ),
-		library: 'textInput',
+		library: 'TextInput',
 		libraryTarget: 'umd',
 		umdNamedDefine: true
   },
