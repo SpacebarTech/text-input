@@ -22,8 +22,6 @@
 <script>
 export default {
 
-	template : '#text-input',
-
 	props : {
 		startingValue : {
 			default : () => ''
