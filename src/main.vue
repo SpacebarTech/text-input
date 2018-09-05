@@ -26,15 +26,6 @@ export default {
 		startingValue : {
 			default : () => ''
 		},
-		// placeholder : {
-		// 	default : () => 'Type here to input text'
-		// },
-		// label : {
-		// 	default : () => 'input'
-		// },
-		// classList : {
-		// 	default : () => ''
-		// },
 		options : {
 			type : Object,
 		},
