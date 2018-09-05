@@ -107,8 +107,6 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
 
-	template: '#text-input',
-
 	props: {
 		startingValue: {
 			default: function _default() {
@@ -838,4 +836,4 @@ if (false) {
 /***/ })
 /******/ ]);
 });
-//# sourceMappingURL=textinput.js.map
+//# sourceMappingURL=index.js.map

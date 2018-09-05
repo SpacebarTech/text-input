@@ -5,7 +5,7 @@ const path = require( 'path' );
 module.exports = {
   entry: path.resolve( __dirname, 'src/main.vue' ),
   output: {
-    filename: 'textinput.js',
+    filename: 'index.js',
 		path: path.resolve( __dirname, 'dist' ),
 		library: 'TextInput',
 		libraryTarget: 'umd',
