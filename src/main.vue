@@ -5,7 +5,7 @@
 	"has-error"  : ( displayError !== "" ),\
 	focused,\
 }')
-	.header
+	.header(v-if='options.label')
 		span.label.noselect {{ options.label }}
 		span.text-error(v-if='typeof displayError !== "object" && displayError !== ""') {{ displayError }}
 	.text-wrapper
@@ -16,18 +16,19 @@
 			:class='options.classList'
 
 			@input='resizeInput'
+			@keydown.enter.exact='emit( "enter", $event )'
+			@focus='emit( "focus", $event )'
 		)
 </template>
 
 <script>
 export default {
+	name : 'text-input',
 
 	props : {
-		startingValue : {
-			default : () => ''
-		},
 		options : {
-			type : Object,
+			type    : Object,
+			default : () => ( {} )
 		},
 		errors : {
 			default : () => ''
@@ -44,11 +45,13 @@ export default {
 	} ),
 
 	created() {
-		this.localValue = this.initialValue ? this.initialValue : '';
+		this.localValue = this.value ? this.value : '';
 	},
 
 	mounted() {
-		this.$nextTick( () => this.resizeInput() );
+		this.$nextTick( () => {
+			this.resizeInput();
+		} );
 	},
 
 	watch : {
@@ -59,16 +62,21 @@ export default {
 
 		localValue( value ) {
 			this.displayError = '';
+
+			if ( value.length - this.value.length > 1 ) {
+				return;
+			}
+
 			this.$emit( 'input', value );
 		},
 
-		initialValue( val ) {
+		value( val ) {
 
 			// without this line, you trigger an infinite loop
 			// of emitting, hearing a change, emitting, hearing a change,
 			// forever
-			if ( val !== this.value ) {
-				this.value = val;
+			if ( val !== this.localValue ) {
+				this.localValue = val;
 
 				this.$nextTick( () => this.resizeInput() );
 			}
@@ -91,14 +99,12 @@ export default {
 
 			this.$emit( 'change', textarea );
 
-			const height = textarea.style.height;
+			let height = textarea.getBoundingClientRect().height;
 
-			let heightNumeric = parseInt( height.substr( 0, height.length - 2 ), 10 );
+			while ( height === textarea.scrollHeight ) {
 
-			while ( heightNumeric === textarea.scrollHeight ) {
-
-				heightNumeric -= 5;
-				textarea.style.height = `${heightNumeric}px`;
+				height -= 5;
+				textarea.style.height = `${height}px`;
 
 			}
 
@@ -106,15 +112,16 @@ export default {
 
 		},
 
+		emit( eventType, event = null ) {
+			this.$emit( eventType, event );
+		}
+
 	}
 
 };
 </script>
 
 <style lang='scss'>
-
-$green              : #68A65E;
-$red                : #e23434;
 
 .text-input {
 	position: relative;
@@ -130,10 +137,6 @@ $red                : #e23434;
 		span {
 			display: inline;
 		}
-	}
-
-	.label {
-		color: $green;
 	}
 
 	.text-error {
