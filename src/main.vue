@@ -115,8 +115,6 @@ export default {
 
 $green              : #68A65E;
 $red                : #e23434;
-$secondaryGrey      : #323232;
-$secondaryBoxShadow : 0px 1px 4px rgba(0,0,0,0.08), 0px 1px 2px rgba(0,0,0,0.12);
 
 .text-input {
 	position: relative;
@@ -147,16 +145,13 @@ $secondaryBoxShadow : 0px 1px 4px rgba(0,0,0,0.08), 0px 1px 2px rgba(0,0,0,0.12)
 	}
 
 	.text-wrapper {
-		padding: 15px;
-		margin: 0 15px;
-		background: $secondaryGrey;
-		border-radius: 10px;
-		box-shadow: $secondaryBoxShadow;
 
 		textarea {
 			width: 100%;
 			background: transparent;
-			color: white;
+			border: none;
+			outline: none;
+			padding: 0;
 		}
 	}
 }
