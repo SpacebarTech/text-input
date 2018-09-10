@@ -99,7 +99,7 @@ export default {
 
 			this.$emit( 'change', textarea );
 
-			let height = textarea.getBoundingClientRect().height;
+			let height = Math.floor( textarea.getBoundingClientRect().height );
 
 			while ( height === textarea.scrollHeight ) {
 
