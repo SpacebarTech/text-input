@@ -104,26 +104,18 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
+	name: 'text-input',
 
 	props: {
-		startingValue: {
-			default: function _default() {
-				return '';
-			}
-		},
-		// placeholder : {
-		// 	default : () => 'Type here to input text'
-		// },
-		// label : {
-		// 	default : () => 'input'
-		// },
-		// classList : {
-		// 	default : () => ''
-		// },
 		options: {
-			type: Object
+			type: Object,
+			default: function _default() {
+				return {};
+			}
 		},
 		errors: {
 			default: function _default() {
@@ -146,13 +138,13 @@ exports.default = {
 	},
 
 	created: function created() {
-		this.localValue = this.initialValue ? this.initialValue : '';
+		this.localValue = this.value ? this.value : '';
 	},
 	mounted: function mounted() {
 		var _this = this;
 
 		this.$nextTick(function () {
-			return _this.resizeInput();
+			_this.resizeInput();
 		});
 	},
 
@@ -163,16 +155,21 @@ exports.default = {
 		},
 		localValue: function localValue(value) {
 			this.displayError = '';
+
+			if (value.length - this.value.length > 1) {
+				return;
+			}
+
 			this.$emit('input', value);
 		},
-		initialValue: function initialValue(val) {
+		value: function value(val) {
 			var _this2 = this;
 
 			// without this line, you trigger an infinite loop
 			// of emitting, hearing a change, emitting, hearing a change,
 			// forever
-			if (val !== this.value) {
-				this.value = val;
+			if (val !== this.localValue) {
+				this.localValue = val;
 
 				this.$nextTick(function () {
 					return _this2.resizeInput();
@@ -194,17 +191,20 @@ exports.default = {
 
 			this.$emit('change', textarea);
 
-			var height = textarea.style.height;
+			var height = textarea.getBoundingClientRect().height;
 
-			var heightNumeric = parseInt(height.substr(0, height.length - 2), 10);
+			while (height === textarea.scrollHeight) {
 
-			while (heightNumeric === textarea.scrollHeight) {
-
-				heightNumeric -= 5;
-				textarea.style.height = heightNumeric + 'px';
+				height -= 5;
+				textarea.style.height = height + 'px';
 			}
 
 			textarea.style.height = textarea.scrollHeight + 'px';
+		},
+		emit: function emit(eventType) {
+			var event = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+			this.$emit(eventType, event);
 		}
 	}
 
@@ -304,7 +304,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.text-input {\n  position: relative;\n}\n.text-input .header {\n    display: inline-block;\n    font-size: 16px;\n    padding-left: 25px;\n    margin-bottom: 5px;\n    text-transform: uppercase;\n    letter-spacing: 2px;\n}\n.text-input .header span {\n      display: inline;\n}\n.text-input .label {\n    color: #68A65E;\n}\n.text-input .text-error {\n    color: #e23434;\n}\n.text-input .text-error::before {\n      content: ' - ';\n}\n.text-input .text-wrapper {\n    padding: 15px;\n    margin: 0 15px;\n    background: #323232;\n    border-radius: 10px;\n    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.08), 0px 1px 2px rgba(0, 0, 0, 0.12);\n}\n.text-input .text-wrapper textarea {\n      width: 100%;\n      background: transparent;\n      color: white;\n}\n", ""]);
+exports.push([module.i, "\n.text-input {\n  position: relative;\n}\n.text-input .header {\n    display: inline-block;\n    font-size: 16px;\n    padding-left: 25px;\n    margin-bottom: 5px;\n    text-transform: uppercase;\n    letter-spacing: 2px;\n}\n.text-input .header span {\n      display: inline;\n}\n.text-input .text-error {\n    color: #e64343;\n}\n.text-input .text-error::before {\n      content: ' - ';\n}\n.text-input .text-wrapper textarea {\n    width: 100%;\n    background: transparent;\n    border: none;\n    outline: none;\n    padding: 0;\n}\n", ""]);
 
 // exports
 
@@ -782,16 +782,18 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "header" }, [
-        _c("span", { staticClass: "label noselect" }, [
-          _vm._v(_vm._s(_vm.options.label))
-        ]),
-        typeof _vm.displayError !== "object" && _vm.displayError !== ""
-          ? _c("span", { staticClass: "text-error" }, [
-              _vm._v(_vm._s(_vm.displayError))
-            ])
-          : _vm._e()
-      ]),
+      _vm.options.label
+        ? _c("div", { staticClass: "header" }, [
+            _c("span", { staticClass: "label noselect" }, [
+              _vm._v(_vm._s(_vm.options.label))
+            ]),
+            typeof _vm.displayError !== "object" && _vm.displayError !== ""
+              ? _c("span", { staticClass: "text-error" }, [
+                  _vm._v(_vm._s(_vm.displayError))
+                ])
+              : _vm._e()
+          ])
+        : _vm._e(),
       _c("div", { staticClass: "text-wrapper" }, [
         _c("textarea", {
           directives: [
@@ -815,7 +817,27 @@ var render = function() {
                 _vm.localValue = $event.target.value
               },
               _vm.resizeInput
-            ]
+            ],
+            keydown: function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              if (
+                $event.ctrlKey ||
+                $event.shiftKey ||
+                $event.altKey ||
+                $event.metaKey
+              ) {
+                return null
+              }
+              _vm.emit("enter", $event)
+            },
+            focus: function($event) {
+              _vm.emit("focus", $event)
+            }
           }
         })
       ])

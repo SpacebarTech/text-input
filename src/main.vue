@@ -123,6 +123,8 @@ export default {
 
 <style lang='scss'>
 
+ $red : #e64343;
+
 .text-input {
 	position: relative;
 
@@ -152,6 +154,7 @@ export default {
 		textarea {
 			width: 100%;
 			background: transparent;
+
 			border: none;
 			outline: none;
 			padding: 0;
