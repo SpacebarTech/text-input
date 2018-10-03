@@ -31,9 +31,11 @@ export default {
 			default : () => ( {} )
 		},
 		errors : {
+      type    : String,
 			default : () => ''
 		},
 		value : {
+      type    : String,
 			default : () => '',
 		},
 	},
@@ -123,7 +125,8 @@ export default {
 
 <style lang='scss'>
 
- $red : #e64343;
+$label : #68A65E;
+$error : #e64343 !default;
 
 .text-input {
 	position: relative;
@@ -141,8 +144,12 @@ export default {
 		}
 	}
 
+  .label {
+		color: $label;
+	}
+
 	.text-error {
-		color: $red;
+		color: $error;
 
 		&::before {
 			content : ' - ';
