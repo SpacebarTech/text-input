@@ -125,7 +125,7 @@ export default {
 
 <style lang='scss'>
 
-$label : #68A65E;
+$label : #68A65E !default;
 $error : #e64343 !default;
 
 .text-input {
