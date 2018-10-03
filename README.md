@@ -11,18 +11,18 @@ Text input component
 
   ```
   props : {
-		options : {
-			type    : Object,
-			default : () => ( {} )
-		},
-		errors : {
+    options : {
+      type    : Object,
+      default : () => ( {} )
+    },
+    errors : {
       type    : String,
-			default : () => ''
-		},
-		value : {
+      default : () => ''
+    },
+    value : {
       type    : String,
-			default : () => '',
-		},
+      default : () => '',
+    },
   }
 
   Options must have the following props :
