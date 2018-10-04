@@ -39,6 +39,14 @@ Text input component
 
 
   ```
+
+  ```
+  Sass variables
+
+  $label : #68A65E !default;
+  $error : #e64343 !default;
+
+  ```
 ## Tests
 
 `npm test`
